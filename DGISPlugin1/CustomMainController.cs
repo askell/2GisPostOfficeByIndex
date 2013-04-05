@@ -57,22 +57,12 @@ namespace DGisPostOfficeByIndex
 
         public void Fill(IFeature f, CalloutTab t)
         {
-            Callout c = t.Callout;
-            /*CalloutTab ct1 = c.AddTab("addtab");
-            ct1.Title = "add";
-            ct1.Text = "add";*/
-            CalloutTab ct2 = c.InsertTab(t, "insert");
-            ct2.Title = "insert";
-            ct2.Text = "insert";
             _innerController.Fill(f,t);
-            //MessageBox.Show(t.Text);
             t.Text = INDEX_LINK.Replace(t.Text, "<span$1 style=\"$2\"$3><a style=\"$2\" href=\"search_post:$4\">$4</a>, ");
         }
 
         public void OnTabAction(CalloutTab t, string s)
         {
-            
-            //_pBaseView.Frame.Map
             if (s.StartsWith("search_post"))
             {
                 string postIndex = s.Substring(12,6);
