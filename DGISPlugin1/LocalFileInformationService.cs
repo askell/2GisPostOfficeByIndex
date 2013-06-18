@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace DGisPostOfficeByIndex
 {
+    /// <summary>
+    /// Локальный файл на снове открытх данных http://info.russianpost.ru/database/ops.html
+    /// </summary>
     class LocalFileInformationService : IPostalInformationService
     {
         private static readonly LocalFileInformationService instance = new LocalFileInformationService();

@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="GdePosylkaInformationService.cs" />
-    <Compile Include="CustomMainController.cs" />
     <Compile Include="IndexCustomizer.cs" />
     <Compile Include="IPostalInformationService.cs" />
     <Compile Include="LocalFileInformationService.cs" />

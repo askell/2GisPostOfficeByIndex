@@ -51,7 +51,8 @@ namespace DGisPostOfficeByIndex
                 this._baseView = pBaseView;
 
                 // TODO: создать команды либо инициализировать класс, в котором эти команды создаются
-                CustomMainController c = new CustomMainController(pBaseView);
+                IMapInfoController defaultContorller = ((IMapInfoControllers2)pBaseView.Frame.Map.MapInfoControllers).FindMapInfoController("Grym.MapInfo.Default");
+                ((IObjectCustomization)defaultContorller).RegisterCustomizer(new IndexCustomizer(pBaseView));
             }
             catch
             {
