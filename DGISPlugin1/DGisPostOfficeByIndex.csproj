@@ -40,22 +40,15 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="GdePosylkaInformationService.cs" />
     <Compile Include="IndexCustomizer.cs" />
-    <Compile Include="IPostalInformationService.cs" />
     <Compile Include="LocalFileInformationService.cs" />
     <Compile Include="PluginImpl.cs" />
-    <Compile Include="PostalInformationServiceManager.cs" />
-    <Compile Include="PostOffice.cs" />
     <Compile Include="PostOffices.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PostOffices.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RosptInformationService.cs" />
-    <Compile Include="RussianPostInformationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="GrymCore">
