@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DGisPostOfficeByIndex
 {
-    class LocalFileInformationService : IPostalInformationService
+    /// <summary>
+    /// Локальный файл на основе открытых данных http://info.russianpost.ru/database/ops.html
+    /// </summary>
+    class LocalFileInformationService
     {
         private static readonly LocalFileInformationService instance = new LocalFileInformationService();
         private readonly IDictionary<string, string> _postOffices;
@@ -29,22 +31,17 @@ namespace DGisPostOfficeByIndex
             }
         }  
 
-        public long LastResponseTime { get; private set; }
-
-        public String ServiceName { get { return "Локальный файл"; } }
-        
-        public PostOffice GetPostOffice(string postIndex)
+        public string GetPostOffice(string postIndex)
         {
-            var timer = Stopwatch.StartNew(); 
-            string foundName;
-            PostOffice reuslt = null;
-            if (_postOffices.TryGetValue(postIndex, out foundName))
-            {
-                reuslt= new PostOffice{Name=foundName,FoundBy=ServiceName };
-            }
-            timer.Stop();
-            LastResponseTime = timer.GetElapsedMillisecondsWithCheck(reuslt);
-            return reuslt;
+            string result;
+            _postOffices.TryGetValue(postIndex, out result);
+            return result;
+        }
+
+        public int GetCityPostOffices(string city, string indexStart)
+        {
+            Regex cityOffices = new Regex("^"+city+"\\s+(\\d+)$");
+            return _postOffices.Count(o => o.Key.Substring(0,3).Equals(indexStart) && (cityOffices.IsMatch(o.Value) || o.Value.Equals(city)));
         }
     }
 }
