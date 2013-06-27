@@ -36,7 +36,6 @@ namespace DGisPostOfficeByIndex
             return str.ToUpper().Replace('Ё', 'Е');
         }
 
-        // Название отделения в виде "<Населенный пункт> <номер>"
         private static Regex CITY_POST_OFFICE_NAME = new Regex("^(.*)\\s+(\\d+)$");
         private IBaseViewThread _pBaseView;
         private Dictionary<String, String> _cities;
@@ -58,9 +57,11 @@ namespace DGisPostOfficeByIndex
                 IDataRow dr = f as IDataRow;
                 if ((dr!=null) && ("grym_map_building".Equals(dr.Type))) {
                     string postIndex= dr.Value["post_index"].ToString();
+                    // Получаем название почтового отделения
                     string postOfficeName = LocalFileInformationService.Instance.GetPostOffice(postIndex);
                     if (postOfficeName != null)
                     {
+                        // Название отделения в виде "<Населенный пункт> <номер>"
                         Match m = CITY_POST_OFFICE_NAME.Match(postOfficeName);
                         String city;
                         String number;
@@ -94,7 +95,7 @@ namespace DGisPostOfficeByIndex
                             }
                             else
                             {
-                                // узнаем число отделений в населенном пункте
+                                // узнаем число отделений в населенном пункте отделения
                                 int officesCount = LocalFileInformationService.Instance.GetCityPostOffices(city, postIndex.Substring(0, 3));
                                 if (officesCount > 2)
                                 {
@@ -109,10 +110,11 @@ namespace DGisPostOfficeByIndex
                                     {
                                         // определяем город в котором находится данный дом
                                         string featureCity = dr.Value["city"].ToString();
+                                        // узнаем число отделений в населенном пункте к которому относится здание
                                         int officesCount2 = LocalFileInformationService.Instance.GetCityPostOffices(NormalizeCityName(featureCity), postIndex.Substring(0, 3));
                                         if (officesCount2 > 0)
                                         {
-                                            // если мы находимся в населенном пункте с несколькими отделениями, значит скорее всего мы в поселке, входящем в состав города (не вынесен ка котдельный населенный пункт) (пос. Светлый, Томск)
+                                            // если мы находимся в населенном пункте с несколькими отделениями, значит скорее всего мы в поселке, входящем в состав города (не вынесен как отдельный населенный пункт) (пос. Светлый, Томск)
                                             // значит нужно искать по названию отделения
                                             criteries.set_Criterion("grym_name", city);
                                         }

@@ -20,7 +20,7 @@ namespace DGisPostOfficeByIndex
             get { return instance; }
         }
  
-        /// Защищенный конструктор нужен, чтобы предотвратить создание экземпляра класса Singleton
+        /// Singleton
         protected LocalFileInformationService() 
         {
             string[] offices = Regex.Split(PostOffices.OPSs, "\r\n|\r|\n");
@@ -31,6 +31,11 @@ namespace DGisPostOfficeByIndex
             }
         }  
 
+        /// <summary>
+        /// Поиск названия почтовго отделения по индексу
+        /// </summary>
+        /// <param name="postIndex">Шестизначный индекс</param>
+        /// <returns>Название отделения</returns>
         public string GetPostOffice(string postIndex)
         {
             string result;
@@ -38,6 +43,12 @@ namespace DGisPostOfficeByIndex
             return result;
         }
 
+        /// <summary>
+        /// Определяем количество почтовых отделений в населенном пункте
+        /// </summary>
+        /// <param name="city">Нормализованное название населенного пункта</param>
+        /// <param name="indexStart">Первые три цифры индекса отдлеений в данном населенном пункте</param>
+        /// <returns>Число отделений, название которых начинается с названия населенного пункта и первые три цифры индекса равны указанным</returns>
         public int GetCityPostOffices(string city, string indexStart)
         {
             Regex cityOffices = new Regex("^"+city+"\\s+(\\d+)$");
